@@ -1,7 +1,7 @@
 # 📦 Stokio Pro – Stok ve Seri Numarası Takip Sistemi
 
 <p align="center">
-  <img src="https://media.giphy.com/media/26tn33ai009Q8XRXK/giphy.gif" width="150px">
+  <img src="https://media.giphy.com/media/Y4ak9Ki2GZCbJxAnJD/giphy.gif" width="150px">
 </p>
 
 <p align="center">
@@ -16,7 +16,6 @@
 - ✔ **Seri Numarası Takibi:** Her ürünün benzersiz seri numaralarıyla (IMEI/Serial) tek tek takibi ve yönetimi.
 - ✔ **Toplu İşlem (Excel/Txt):** Tedarikçiden gelen veya satılan ürünlerin seri numaralarını dosya yükleyerek toplu işleme.
 - ✔ **Gelişmiş Dashboard:** Kritik stok uyarıları, son 30 günlük giriş-çıkış grafikleri ve son hareketler özeti.
-- ✔ **Kullanıcı & Rol Yönetimi:** Yönetici (Admin) ve Personel (User) yetkilendirmesi, şifreli giriş sistemi.
 - ✔ **İşlem Geçmişi (Logs):** Kimin, ne zaman, hangi ürünü eklediği veya sildiği detaylı log kayıtları (Audit Logs).
 - ✔ **Modern Arayüz:** Göz yormayan, animasyonlu **Koyu Mod (Dark Mode)** ve Açık Mod desteği.
 
@@ -79,3 +78,4 @@ Bu proje GNU General Public License v3.0 ile lisanslanmıştır. Projenin tüm k
 
 ### 🤝 İletişim
 <p align="left"> <a href="https://discordapp.com/users/481831692399673375"><img src="https://img.shields.io/badge/Discord-Zyix%231002-7289DA?logo=discord&style=flat-square"></a> <a href="https://www.youtube.com/channel/UC7uBi3y2HOCLde5MYWECynQ?view_as=subscriber"><img src="https://img.shields.io/badge/YouTube-Subscribe-red?logo=youtube&style=flat-square"></a> <a href="https://www.reddit.com/user/_Zyix"><img src="https://img.shields.io/badge/Reddit-Profile-orange?logo=reddit&style=flat-square"></a> <a href="https://open.spotify.com/user/07288iyoa19459y599jutdex6"><img src="https://img.shields.io/badge/Spotify-Follow-green?logo=spotify&style=flat-square"></a> </p>
+
