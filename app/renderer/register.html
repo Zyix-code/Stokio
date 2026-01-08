@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <title>Stokio - Kayıt Ol</title>
+    <link href="../../node_modules/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="auth-page">
+    <div class="auth-card">
+        <h4 class="text-center mb-4 text-secondary">Yeni Hesap Oluştur</h4>
+
+        <input id="name_surname" class="form-control mb-2" type="text" placeholder="İsim Soyisim *" required>
+        <input id="username" class="form-control mb-2" type="text" placeholder="Kullanıcı Adı *" required>
+        <input id="email" class="form-control mb-2" type="email" placeholder="E-posta *" required>
+        <input id="phone_number" class="form-control mb-2" type="tel" placeholder="Telefon (Opsiyonel)">
+        <input id="password" class="form-control mb-3" type="password" placeholder="Şifre *" required>
+
+        <button id="btnRegister" class="btn btn-success w-100 fw-bold">Kayıt Ol</button>
+
+        <p class="text-center mt-3 small">
+            Zaten hesabın var mı? <a href="login.html" class="text-decoration-none">Giriş yap</a>
+        </p>
+        <div id="msg" class="mt-2 text-center small fw-bold"></div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="js/register.js"></script>
+</body>
+</html>

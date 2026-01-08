@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <title>Stokio Pro</title>
+    <link href="../../node_modules/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+    <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="./css/style.css">
+</head>
+<body>
+
+<div class="wrapper">
+    <nav class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <span class="brand-text"><i class="bi bi-box-seam-fill text-primary"></i> Stokio</span>
+            <button class="btn btn-sm text-white" onclick="toggleSidebar()"><i class="bi bi-list fs-4"></i></button>
+        </div>
+        <ul class="sidebar-menu">
+            <li>
+                <a href="#" onclick="showPage('dashboard')" id="link-dashboard" class="active" 
+                data-bs-toggle="tooltip" data-bs-placement="right" title="Gösterge Paneli">
+                    <i class="bi bi-speedometer2"></i> <span>Panel</span>
+                </a>
+            </li>
+            <li>
+                <a href="#" onclick="showPage('products')" id="link-products"
+                data-bs-toggle="tooltip" data-bs-placement="right" title="Ürünler & Stok">
+                    <i class="bi bi-box"></i> <span>Ürünler & Stok</span>
+                </a>
+            </li>
+            <li>
+                <a href="#" onclick="showPage('logs')" id="link-logs"
+                data-bs-toggle="tooltip" data-bs-placement="right" title="İşlem Geçmişi">
+                    <i class="bi bi-clock-history"></i> <span>Geçmiş</span>
+                </a>
+            </li>
+            <li>
+                <a href="#" onclick="showPage('settings')" id="link-settings"
+                data-bs-toggle="tooltip" data-bs-placement="right" title="Ayarlar">
+                    <i class="bi bi-gear"></i> <span>Ayarlar</span>
+                </a>
+            </li>
+        </ul>
+        <div class="mt-auto p-3 border-top border-secondary border-opacity-25 text-center">
+        <small id="user-display" class="d-block mb-2 text-truncate fw-bold text-light"></small>
+        <button id="btnLogout" class="btn btn-sm btn-outline-danger w-100 d-flex align-items-center justify-content-center gap-2" data-bs-toggle="tooltip" data-bs-placement="right" title="Çıkış Yap">
+            <i class="bi bi-power"></i> 
+            <span>Çıkış Yap</span> 
+        </button>
+    </div>
+    </nav>
+
+    <main class="main-content">
+        <div id="page-dashboard">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h3 class="fw-bold m-0"><i class="bi bi-grid-1x2-fill text-primary"></i> Gösterge Paneli</h3>
+                <span class="text-muted small"><i class="bi bi-calendar3"></i> Son 30 Günlük Özet</span>
+            </div>
+
+            <div class="row g-3 mb-4">
+                <div class="col-md-3">
+                    <div class="card border-0 shadow-sm h-100" style="border-left: 4px solid #3498db !important;">
+                        <div class="card-body">
+                            <div class="text-muted small fw-bold text-uppercase">Toplam Ürün Çeşidi</div>
+                            <div class="d-flex justify-content-between align-items-center mt-2">
+                                <h2 class="mb-0 fw-bold text-dark" id="dash-total-types">0</h2>
+                                <i class="bi bi-box-seam fs-1 text-primary opacity-25"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card border-0 shadow-sm h-100" style="border-left: 4px solid #2ecc71 !important;">
+                        <div class="card-body">
+                            <div class="text-muted small fw-bold text-uppercase">Stok Girişi (30 Gün)</div>
+                            <div class="d-flex justify-content-between align-items-center mt-2">
+                                <h2 class="mb-0 fw-bold text-dark" id="dash-total-in">0</h2>
+                                <i class="bi bi-arrow-down-circle fs-1 text-success opacity-25"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card border-0 shadow-sm h-100" style="border-left: 4px solid #e74c3c !important;">
+                        <div class="card-body">
+                            <div class="text-muted small fw-bold text-uppercase">Satış / Çıkış (30 Gün)</div>
+                            <div class="d-flex justify-content-between align-items-center mt-2">
+                                <h2 class="mb-0 fw-bold text-dark" id="dash-total-out">0</h2>
+                                <i class="bi bi-cart-check fs-1 text-danger opacity-25"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card border-0 shadow-sm h-100" style="border-left: 4px solid #f1c40f !important;">
+                        <div class="card-body">
+                            <div class="text-muted small fw-bold text-uppercase">Kritik Stok Uyarısı</div>
+                            <div class="d-flex justify-content-between align-items-center mt-2">
+                                <h2 class="mb-0 fw-bold text-dark" id="dash-low-stock">0</h2>
+                                <i class="bi bi-exclamation-triangle fs-1 text-warning opacity-25"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row g-3 mb-4">
+                <div class="col-md-8">
+                    <div class="card border-0 shadow-sm h-100">
+                        <div class="card-header bg-white border-0 fw-bold pt-3 ps-3">
+                            <i class="bi bi-graph-up"></i> Stok Hareket Analizi
+                        </div>
+                        <div class="card-body">
+                            <canvas id="stockChart" style="max-height: 250px;"></canvas>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-4">
+                    <div class="card border-0 shadow-sm h-100">
+                        <div class="card-header bg-danger text-white fw-bold border-0">
+                            <i class="bi bi-lightning-fill"></i> Kritik Seviyedeki Ürünler
+                        </div>
+                        <div class="card-body p-0">
+                            <ul class="list-group list-group-flush" id="warnings-list" style="max-height: 250px; overflow-y: auto;">
+                                </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="card border-0 shadow-sm mt-4">
+                <div class="card-header bg-white border-bottom-0 fw-bold pt-4 ps-4 d-flex justify-content-between align-items-center">
+                    <span><i class="bi bi-activity text-primary me-2"></i>Son Hareketler</span>
+                    <button class="btn btn-sm btn-light text-muted border px-3" onclick="showPage('logs')">Tümünü Gör</button>
+                </div>
+                <div class="card-body p-0">
+                    <div class="table-responsive">
+                        <table class="table table-hover align-middle mb-0">
+                            <tbody id="dash-recent-logs">
+                                </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="page-products" style="display:none;">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <h3 class="fw-bold">Ürün Yönetimi</h3>
+                <div>
+                    <button class="btn btn-success me-2" data-bs-toggle="modal" data-bs-target="#createProductModal"><i class="bi bi-plus-lg"></i> Yeni</button>
+                    <button class="btn btn-primary" onclick="loadProducts()"><i class="bi bi-arrow-clockwise"></i></button>
+                </div>
+            </div>
+            <div class="card">
+                <div class="table-responsive">
+                    <table class="table table-hover align-middle mb-0">
+                        <thead class="bg-light">
+                            <tr><th class="ps-3">Görsel</th><th>Kod</th><th>Ürün Adı</th><th>Stok</th><th>Min</th><th class="text-end pe-3">İşlemler</th></tr>
+                        </thead>
+                        <tbody id="product-list"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div id="page-logs" style="display:none;">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <h3 class="fw-bold">İşlem Geçmişi</h3>
+                <button class="btn btn-sm btn-outline-primary" onclick="loadLogs()"><i class="bi bi-arrow-clockwise"></i> Yenile</button>
+            </div>
+            <div class="card"><ul class="list-group list-group-flush" id="log-list"></ul></div>
+        </div>
+        <div id="page-settings" style="display:none;">
+            <h3 class="fw-bold mb-3">Ayarlar</h3>
+            <div class="card p-4" style="max-width: 500px;">
+                <div class="d-flex justify-content-between align-items-center mb-4 p-3 rounded border theme-container">
+                    <div>
+                        <h6 class="mb-0 fw-bold">Görünüm Modu</h6>
+                        <div class="form-text small">Aydınlık veya karanlık tema seçimi</div>
+                    </div>
+                    <div class="theme-switch-wrapper">
+                        <label class="theme-switch" for="check-dark-mode">
+                            <input type="checkbox" id="check-dark-mode">
+                            <div class="slider round">
+                                <i class="bi bi-sun-fill icon-moving-sun"></i>
+                                <i class="bi bi-moon-stars-fill icon-moving-moon"></i>
+                            </div>
+                        </label>
+                    </div>
+                </div>
+                <h6 class="text-muted border-bottom pb-2 mb-3">Profil</h6>
+                <div class="mb-3"><label class="small text-muted">Kullanıcı Adı</label><input type="text" id="set-username" class="form-control"></div>
+                <div class="mb-3"><label class="small text-muted">E-posta</label><input type="email" id="set-email" class="form-control"></div>
+                <button onclick="updateProfile()" class="btn btn-primary w-100 mb-4">Kaydet</button>
+                
+                <h6 class="text-muted border-bottom pb-2 mb-3 mt-4">Giriş Tercihleri</h6>
+                <div class="form-check form-switch mb-3">
+                <input class="form-check-input" type="checkbox" id="set-remember" style="cursor: pointer;">
+                <label class="form-check-label" for="set-remember">Beni Hatırla</label>
+                <div class="form-text small">Bir sonraki açılışta kullanıcı adı ve şifreniz otomatik doldurulur.</div>
+                </div>
+                <div class="form-check form-switch mb-4">
+                <input class="form-check-input" type="checkbox" id="set-autologin" style="cursor: pointer;">
+                <label class="form-check-label" for="set-autologin">Otomatik Giriş</label>
+                <div class="form-text small">Uygulama açıldığında beklemeden hesabınıza giriş yapılır.</div>
+                </div>
+                <h6 class="text-muted border-bottom pb-2 mb-3">Güvenlik</h6>
+                <input type="password" id="set-pass-old" class="form-control mb-2" placeholder="Eski Şifre">
+                <input type="password" id="set-pass-new" class="form-control mb-3" placeholder="Yeni Şifre">
+                <button onclick="updatePassword()" class="btn btn-warning w-100">Şifreyi Değiştir</button>
+            </div>
+        </div>
+    </main>
+</div>
+
+<div class="modal fade" id="createProductModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header"><h5 class="modal-title">Yeni Ürün</h5><button type="button" class="btn-close" data-bs-dismiss="modal"></button></div>
+            <div class="modal-body">
+                <form id="createForm"><div class="row g-2">
+                    <div class="col-md-6"><input type="text" id="cp-model" class="form-control" placeholder="Model Kodu *" required></div>
+                    <div class="col-md-6"><input type="text" id="cp-name" class="form-control" placeholder="Ürün Adı *" required></div>
+                    <div class="col-12"><input type="number" id="cp-min" class="form-control" placeholder="Min Stok" value="5"></div>
+                    <div class="col-12"><button type="button" class="btn btn-sm btn-outline-secondary w-100" onclick="selectImage('cp')">Görsel Seç...</button><input type="hidden" id="cp-image-path"><div id="cp-file-name" class="small text-center mt-1 text-truncate"></div></div>
+                </div></form>
+            </div>
+            <div class="modal-footer"><button type="button" class="btn btn-primary w-100" onclick="createProduct()">Kaydet</button></div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="editProductModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Ürün Düzenle</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <input type="hidden" id="ep-id">
+                <div class="row g-2">
+                    <div class="col-md-6"><label class="small text-muted">Kod</label><input type="text" id="ep-model" class="form-control"></div>
+                    <div class="col-md-6"><label class="small text-muted">İsim</label><input type="text" id="ep-name" class="form-control"></div>
+                    <div class="col-12"><label class="small text-muted">Min Stok</label><input type="number" id="ep-min" class="form-control"></div>
+                    
+                    <div class="col-12 border-top pt-3 mt-2">
+                        <input type="hidden" id="ep-image-path">
+                        <div class="d-flex justify-content-between align-items-center">
+                             <small id="ep-status" class="text-muted fst-italic">Görsel Durumu</small>
+                             <div class="d-flex gap-3"> 
+                                <button class="btn btn-sm btn-outline-secondary px-3" onclick="selectImage('ep')">Seç</button>
+                                <button id="btn-delete-img" class="btn btn-sm btn-outline-danger px-3" onclick="deleteImageInEdit()">Sil</button>
+                             </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer"><button type="button" class="btn btn-warning w-100" onclick="updateProduct()">Güncelle</button></div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="viewSerialsModal" tabindex="-1">
+    <div class="modal-dialog modal-xl modal-dialog-scrollable">
+        <div class="modal-content border-0 shadow-lg">
+            <div class="modal-header bg-white border-bottom-0 pb-0">
+                <div>
+                    <h5 class="modal-title fw-bold text-dark"><i class="bi bi-list-check text-primary me-2"></i>Seri Numarası Hareketleri</h5>
+                    <p class="text-muted small mt-1 mb-2">Ürüne ait tüm giriş-çıkış ve cari hareketlerini buradan takip edebilirsiniz.</p>
+                </div>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+
+            <div class="modal-body p-3">
+                <div class="table-responsive rounded-3 border">
+                    <table class="table table-hover mb-0">
+                        <thead class="bg-secondary bg-opacity-10 border-bottom">
+                            <tr class="text-secondary text-uppercase small" style="font-size: 0.75rem; letter-spacing: 0.5px;">
+                                <th class="py-3 ps-3" style="font-weight: 700;">Seri No</th>
+                                <th class="py-3" style="font-weight: 700;">Durum</th>
+                                <th class="py-3" style="font-weight: 700;">Giriş T.</th>
+                                <th class="py-3" style="font-weight: 700;">Çıkış T.</th>
+                                <th class="py-3" style="font-weight: 700;">Tedarikçi</th>
+                                <th class="py-3" style="font-weight: 700;">Müşteri</th>
+                                <th class="py-3" style="font-weight: 700;">Sipariş No</th>
+                                <th class="py-3 pe-3 text-end" style="width: 50px;">Sil</th> </tr>
+                        </thead>
+                        <tbody id="vs-list" class="border-top-0"></tbody>
+                    </table>
+                </div>
+            </div>
+            
+            <div class="modal-footer border-top-0 pt-0">
+                <button type="button" class="btn btn-light text-muted" data-bs-dismiss="modal">Kapat</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="addStockModal" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header bg-success text-white">
+                <h5 class="modal-title">Stok Girişi</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <input type="hidden" id="as-product-id">
+                <h6 id="as-product-title" class="fw-bold mb-3 border-bottom pb-2"></h6>
+                
+                <div class="row">
+                    <div class="col-md-5">
+                        <label class="small text-muted mb-1">Toplu İşlem</label>
+                        <button class="btn btn-outline-success w-100 mb-3" onclick="uploadFileToTextarea('as-manual-serials')">
+                            <i class="bi bi-file-earmark-text"></i> Excel / Metin Yükle
+                        </button>
+                        
+                        <label class="small text-muted mb-1">Bilgiler</label>
+                        <input type="text" id="as-source" class="form-control mb-2" placeholder="Tedarikçi (Zorunlu)">
+                        <input type="text" id="as-notes" class="form-control" placeholder="Fatura/Notlar">
+                    </div>
+                    
+                    <div class="col-md-7 d-flex flex-column">
+                        <div class="d-flex justify-content-between align-items-center mb-1">
+                            <label class="small text-muted">Seri Numaraları</label>
+                            <span id="as-count-badge" class="badge bg-secondary">0 Adet</span>
+                        </div>
+                        <textarea id="as-manual-serials" class="form-control flex-grow-1" rows="8" placeholder="Seri numaralarını buraya yapıştırın veya dosyadan yükleyin..."></textarea>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-success w-100" onclick="confirmAddStock()">Stok Girişini Onayla</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="removeStockModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header bg-danger text-white">
+                <h5 class="modal-title">Stok Çıkışı</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <div class="row mb-3">
+                    <div class="col-12">
+                        <button class="btn btn-outline-danger w-100 btn-sm mb-3" onclick="uploadFileToTextarea('rs-serials')">
+                            <i class="bi bi-upload"></i> Excel / Metin Listesinden Yükle
+                        </button>
+                    </div>
+                    <div class="col-12">
+                        <input type="text" id="rs-recipient" class="form-control mb-2" placeholder="Alıcı / Müşteri (Zorunlu)">
+                        <input type="text" id="rs-invoice" class="form-control mb-3" placeholder="Fatura / Sipariş No">
+                        
+                        <div class="d-flex justify-content-between align-items-center mb-1">
+                            <label class="small text-muted">Okutulan Seriler</label>
+                            <span id="rs-count-badge" class="badge bg-secondary">0 Adet</span>
+                        </div>
+                        <textarea id="rs-serials" class="form-control" rows="6" placeholder="Seri numaraları..."></textarea>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-danger w-100" onclick="confirmRemoveStock()">Çıkışı Tamamla</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="imagePreviewModal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered"><div class="modal-content bg-transparent border-0 text-center"><img id="previewImage" src="" class="img-fluid rounded shadow" style="max-height: 80vh;"></div></div>
+</div>
+
+<script src="../../node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="./js/main.js"></script>
+</body>
+</html>

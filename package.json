@@ -1,0 +1,26 @@
+{
+  "name": "stokio",
+  "version": "1.0.0",
+  "description": "Stokio - Masaüstü stok takip uygulaması (zyixCode tarafından kodlanmıştır.)",
+  "main": "main-electron.js",
+  "scripts": {
+    "start": "electron .",
+    "build": "electron-packager . STOKIO --platform=win32 --arch=x64 --out=dist --overwrite"
+  },
+  "keywords": [],
+  "author": "zyixcode",
+  "license": "ISC",
+  "type": "commonjs",
+  "devDependencies": {
+    "electron": "^39.2.6",
+    "electron-packager": "^17.1.2"
+  },
+  "dependencies": {
+    "bcrypt": "^6.0.0",
+    "bootstrap": "^5.3.8",
+    "electron-oauth2": "^3.0.0",
+    "jsonwebtoken": "^9.0.3",
+    "sqlite3": "^5.1.7",
+    "xlsx": "^0.18.5"
+  }
+}
